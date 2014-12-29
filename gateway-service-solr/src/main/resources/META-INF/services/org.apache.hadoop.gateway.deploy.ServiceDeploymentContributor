@@ -16,4 +16,4 @@
 # limitations under the License.
 ##########################################################################
 
-org.apache.hadoop.gateway.webhcat.SolrDeploymentContributor
+org.apache.hadoop.gateway.solr.SolrDeploymentContributor

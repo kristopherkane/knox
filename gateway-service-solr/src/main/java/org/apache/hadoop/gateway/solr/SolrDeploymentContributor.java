@@ -30,10 +30,10 @@ import org.apache.hadoop.gateway.filter.rewrite.api.UrlRewriteRulesDescriptor;
 import org.apache.hadoop.gateway.filter.rewrite.api.UrlRewriteRulesDescriptorFactory;
 import org.apache.hadoop.gateway.topology.Service;
 
-public class WebHCatDeploymentContributor extends ServiceDeploymentContributorBase {
+public class SolrDeploymentContributor extends ServiceDeploymentContributorBase {
 
-  private static final String RULES_RESOURCE = WebHCatDeploymentContributor.class.getName().replace( '.', '/' ) + "/rewrite.xml";
-  private static final String SOLR_EXTERNAL_PATH = "/solr/v1";
+  private static final String RULES_RESOURCE = SolrDeploymentContributor.class.getName().replace( '.', '/' ) + "/rewrite.xml";
+  private static final String SOLR_EXTERNAL_PATH = "/solr";
 
   @Override
   public String getRole() {
@@ -52,9 +52,9 @@ public class WebHCatDeploymentContributor extends ServiceDeploymentContributorBa
   }
 
   private void contributeRewriteRules( DeploymentContext context, Service service ) throws IOException {
-    UrlRewriteRulesDescriptor hbaseRules = loadRulesFromTemplate();
+    UrlRewriteRulesDescriptor solrRules = loadRulesFromTemplate();
     UrlRewriteRulesDescriptor clusterRules = context.getDescriptor( "rewrite" );
-    clusterRules.addRules( hbaseRules );
+    clusterRules.addRules( solrRules );
   }
 
   private UrlRewriteRulesDescriptor loadRulesFromTemplate() throws IOException {

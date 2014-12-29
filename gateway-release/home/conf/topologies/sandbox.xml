@@ -83,13 +83,13 @@
         Note that when you are using Sandbox, the external hostname needs to be localhost, as seen in out
         of box sandbox.xml.  This is because Sandbox uses port mapping to allow clients to connect to the
         Hadoop services using localhost.  In real clusters, external host names would almost never be localhost.
-        -->
+
         <provider>
             <role>hostmap</role>
             <name>static</name>
             <enabled>true</enabled>
             <param><name>localhost</name><value>sandbox,sandbox.hortonworks.com</value></param>
-        </provider>
+        </provider> -->
 
     </gateway>
 
@@ -131,6 +131,10 @@
     <service>
         <role>RESOURCEMANAGER</role>
         <url>http://localhost:8088/ws</url>
+    </service>
+    <service>
+        <role>SOLR</role>
+        <url>http://localhost:8983/solr</url>
     </service>
 
 </topology>

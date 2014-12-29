@@ -17,12 +17,12 @@
 -->
 <rules>
 
-    <rule dir="IN" name="WEBHCAT/webhcat/root/inbound" pattern="*://*:*/**/templeton/v1/?{**}">
-      <rewrite template="{$serviceUrl[WEBHCAT]}/v1/?{**}"/>
+    <rule dir="IN" name="SOLR/solr/root/inbound" pattern="*://*:*/**/solr/?{**}">
+      <rewrite template="{$serviceUrl[SOLR]}/?{**}"/>
     </rule>
 
-    <rule dir="IN" name="WEBHCAT/webhcat/path/inbound" pattern="*://*:*/**/templeton/v1/{path=**}?{**}">
-      <rewrite template="{$serviceUrl[WEBHCAT]}/v1/{path=**}?{**}"/>
+    <rule dir="IN" name="SOLR/solr/path/inbound" pattern="*://*:*/**/solr/{path=**}?{**}">
+      <rewrite template="{$serviceUrl[SOLR]}/{path=**}?{**}"/>
     </rule>
 
 </rules>
