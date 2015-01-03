@@ -22,12 +22,16 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.hadoop.gateway.deploy.DeploymentContext;
 import org.apache.hadoop.gateway.deploy.ServiceDeploymentContributorBase;
+import org.apache.hadoop.gateway.descriptor.FilterParamDescriptor;
 import org.apache.hadoop.gateway.descriptor.ResourceDescriptor;
 import org.apache.hadoop.gateway.filter.rewrite.api.UrlRewriteRulesDescriptor;
 import org.apache.hadoop.gateway.filter.rewrite.api.UrlRewriteRulesDescriptorFactory;
+import org.apache.hadoop.gateway.filter.rewrite.api.UrlRewriteServletFilter;
 import org.apache.hadoop.gateway.topology.Service;
 
 public class SolrDeploymentContributor extends ServiceDeploymentContributorBase {
@@ -67,12 +71,13 @@ public class SolrDeploymentContributor extends ServiceDeploymentContributorBase 
   }
 
   private void contributeResources( DeploymentContext context, Service service ) throws URISyntaxException {
+    List<FilterParamDescriptor> params;
     ResourceDescriptor rootResource = context.getGatewayDescriptor().addResource();
     rootResource.role( service.getRole() );
     rootResource.pattern( SOLR_EXTERNAL_PATH + "/?**" );
     addWebAppSecFilters( context, service, rootResource );
     addAuthenticationFilter( context, service, rootResource );
-    addRewriteFilter( context, service, rootResource, null );
+    addRewriteFilter(context, service, rootResource, null );
     addIdentityAssertionFilter( context, service, rootResource );
     addAuthorizationFilter( context, service, rootResource );
     addDispatchFilter( context, service, rootResource );
@@ -82,7 +87,11 @@ public class SolrDeploymentContributor extends ServiceDeploymentContributorBase 
     pathResource.pattern( SOLR_EXTERNAL_PATH + "/**?**" );
     addWebAppSecFilters( context, service, pathResource );
     addAuthenticationFilter( context, service, pathResource );
-    addRewriteFilter( context, service, pathResource, null );
+    params = new ArrayList<FilterParamDescriptor>();
+    params.add( rootResource.createFilterParam().
+            name( UrlRewriteServletFilter.REQUEST_URL_RULE_PARAM ).value( "SOLR/solr/path/outbound" ) );
+
+    addRewriteFilter(context, service, pathResource, null );
     addIdentityAssertionFilter( context, service, pathResource );
     addAuthorizationFilter( context, service, pathResource );
     addDispatchFilter( context, service, pathResource );

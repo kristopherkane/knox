@@ -21,8 +21,23 @@
       <rewrite template="{$serviceUrl[SOLR]}/?{**}"/>
     </rule>
 
+
+
     <rule dir="IN" name="SOLR/solr/path/inbound" pattern="*://*:*/**/solr/{path=**}?{**}">
       <rewrite template="{$serviceUrl[SOLR]}/{path=**}?{**}"/>
     </rule>
+
+    <rule dir="OUT" name="SOLR/solr/path/outbound">
+        <match pattern="{scheme}://{host}:{port}/{path=**}?{**}"/>
+        <rewrite template="{$serviceUrl[SOLR]}/{path=**}?{**}"/>
+    </rule>
+
+    <!--
+
+    <rule dir="OUT" name="SOLR/solr/root/outbound">
+        <match pattern="{scheme}://{host}:{port}/?{**}"/>
+        <rewrite template="{$frontend[url]}/solr/?{**}"/>
+    </rule>-->
+
 
 </rules>
