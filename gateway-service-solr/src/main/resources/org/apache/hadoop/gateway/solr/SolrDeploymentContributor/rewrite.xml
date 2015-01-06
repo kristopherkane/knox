@@ -22,7 +22,6 @@
     </rule>
 
 
-
     <rule dir="IN" name="SOLR/solr/path/inbound" pattern="*://*:*/**/solr/{path=**}?{**}">
       <rewrite template="{$serviceUrl[SOLR]}/{path=**}?{**}"/>
     </rule>
